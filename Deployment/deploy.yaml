@@ -1,22 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: promshim-sd
+  name: httproute-prometheus-shim
   labels:
-    app: promshim-sd
+    app: httproute-prometheus-shim
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: promshim-sd
+      app: httproute-prometheus-shim
   template:
     metadata:
       labels:
-        app: promshim-sd
+        app: httproute-prometheus-shim
     spec:
-      serviceAccountName: promshim-sd
+      serviceAccountName: httproute-prometheus-shim
       containers:
         - name: app
-          image: dennysv/promshim-http-sd:latest
+          image: dennysv/httproute-prometheus-shim:latest
           # ports:
           #   - containerPort: 8000

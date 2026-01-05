@@ -1,7 +1,7 @@
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  name: promshim-sd-reader
+  name: httproute-prometheus-shim
 rules:
   - apiGroups: ["networking.k8s.io"]
     resources:
@@ -21,18 +21,18 @@ rules:
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: promshim-sd
+  name: httproute-prometheus-shim
   namespace: default
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
-  name: promshim-sd-binding
+  name: httproute-prometheus-shim-sd-binding
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: promshim-sd-reader
+  name: httproute-prometheus-shim
 subjects:
   - kind: ServiceAccount
-    name: promshim-sd
+    name: httproute-prometheus-shim
     namespace: default
