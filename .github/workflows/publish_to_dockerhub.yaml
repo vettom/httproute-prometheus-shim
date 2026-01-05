@@ -88,3 +88,23 @@ jobs:
 
           sed -i "s/tag:.*/tag: \"${APP_VERSION}\"/" ./helm/${{ env.IMAGE_NAME }}/values.yaml
           cat ./helm/${{ env.IMAGE_NAME }}/Chart.yaml
+
+      - name: Package and push chart
+        run: |
+          cd helm
+          mkdir -p packaged
+          CHART_VERSION="${{ steps.increment_version.outputs.new_version }}"
+
+          CHART_FILE="${env.IMAGE_NAME}-${CHART_VERSION}.tgz"
+
+          helm package ${env.IMAGE_NAME} --destination ./packaged
+
+          echo "Expected chart file: $CHART_FILE"
+
+          helm push "./packaged/${CHART_FILE}"  oci://docker.io/${{ secrets.DOCKERHUB_USER }}/${{ env.IMAGE_NAME }}
+
+      # - name: Create GitHub Release
+      #   uses: softprops/action-gh-release@v2
+      #   with:
+      #     tag_name: "${{ steps.increment_version.outputs.new_tag }}"
+      #     generate_release_notes: false

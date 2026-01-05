@@ -34,6 +34,10 @@ terraform.rc
 .DS_Store
 .Trash
 
+# no Compressed files
+*.tgz
+*.tar.gz
+*.zip
 # Distribution / packaging
 .Python
 build/
