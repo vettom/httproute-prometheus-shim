@@ -17,6 +17,6 @@ spec:
       serviceAccountName: httproute-prometheus-shim
       containers:
         - name: app
-          image: dennysv/httproute-prometheus-shim:latest
-          # ports:
-          #   - containerPort: 8000
+          image: dennysv/httproute-prometheus-shim:v0.0.3
+          ports:
+            - containerPort: 9113

@@ -2,15 +2,14 @@
 
 # Promshim for Httproutes and Ingress
 
-![Workflow Status](https://github.com/vettom/httproute-prometheus-shim/actions/workflows/publish_to_dockerhub.yaml/badge.svg)
-[![Latest Release](https://github.com/vettom/httproute-prometheus-shim/releases/latest/download/badge.svg)](https://github.com/vettom/httproute-prometheus-shim/releases/latest)
+![Workflow Status](https://github.com/vettom/httproute-prometheus-shim/actions/workflows/publish_to_dockerhub.yaml/badge.svg) [![Latest Release](https://img.shields.io/github/v/release/vettom/httproute-prometheus-shim)](https://github.com/vettom/httproute-prometheus-shim/releases/latest)
 
 Prometheus shim application to retrieve list of all Ingress, httproutes and present it in HTTP service Definition format for Prometheus to monitor. This in turn can be used with tools like Blackbos-monitoring to automate monitoring of Ingress and Http routes.
 
 ## Installation
 
 ```bash
-helm install httproute-prometheus-shim oci://registry-1.docker.io/dennysv/httproute-prometheus-shim --version 0.0.3
+helm install httproute-prometheus-shim oci://registry-1.docker.io/dennysv/httproute-prometheus-shim --version 1.0.1
 ```
 
 When a version of app is published, helm chart with same version is created(without v)
@@ -35,7 +34,7 @@ Following is the sample output for httproutes-sd endpoint in Prometheus service 
       "__meta_origin": "eks_cluster",
       "__meta_source": "prom_shim_http_routes"
     },
-    "targets": ["prometheus.radio.online", "grafana.radio.online"]
+    "targets": ["prometheus.vettom.online", "grafana.vettom.online"]
   }
 ]
 ```
