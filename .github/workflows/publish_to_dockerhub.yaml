@@ -103,8 +103,8 @@ jobs:
 
           helm push "./packaged/${CHART_FILE}"  oci://docker.io/${{ secrets.DOCKERHUB_USER }}
 
-      # - name: Create GitHub Release
-      #   uses: softprops/action-gh-release@v2
-      #   with:
-      #     tag_name: "${{ steps.increment_version.outputs.new_tag }}"
-      #     generate_release_notes: false
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: "${{ steps.increment_version.outputs.new_tag }}"
+          generate_release_notes: false

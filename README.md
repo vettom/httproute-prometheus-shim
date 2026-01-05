@@ -2,30 +2,26 @@
 
 # Promshim for Httproutes and Ingress
 
-![Workflow Status](https://github.com/vettom/httproute_prometheus_shim/actions/workflows/publish_to_dockerhub.yml/badge.svg)
-[![Latest Release](https://github.com/vettom/httproute_prometheus_shim/releases/latest/download/badge.svg)](https://github.com/bmg-audio-cloud-engineering/httproute-prometheus-shim/releases/latest)
+![Workflow Status](https://github.com/vettom/httproute-prometheus-shim/actions/workflows/publish_to_dockerhub.yaml/badge.svg)
+[![Latest Release](https://github.com/vettom/httproute-prometheus-shim/releases/latest/download/badge.svg)](https://github.com/vettom/httproute-prometheus-shim/releases/latest)
 
-Prometheus shim application to retrieve list of all Ingress, httproutes and present it in HTTP service Definition format for Prometheus to monitor.
+Prometheus shim application to retrieve list of all Ingress, httproutes and present it in HTTP service Definition format for Prometheus to monitor. This in turn can be used with tools like Blackbos-monitoring to automate monitoring of Ingress and Http routes.
 
-Updates to the application will trigger following
+## Installation
 
-- Get current tag from git repo
-- Increment version tag and create package
-- Push new version image to Dockerhub registry
-- Update Helm chart to reflect version changes
-- Package and upload chart to Dockerhub.
-
-## Installing App
+```bash
+helm install httproute-prometheus-shim oci://registry-1.docker.io/dennysv/httproute-prometheus-shim --version 0.0.3
+```
 
 When a version of app is published, helm chart with same version is created(without v)
 If release/tag/app version is v3.1.1, then the helm chart version will ve 3.1.1
 
 ## Access URL
 
-App exposes ingress as well as HTTP routes
+There are 2 paths exposed by the app
 
-- http://<host>:<port>/ingress-sd # returns list of all ingress in HTTP service definition format
-- http://<host>:<port>/httproutes-sd # returns list of all http routes in HTTP service definition format
+- http://host:9113/ingress-sd # returns list of all ingress in HTTP service definition format
+- http://host:9113/httproutes-sd # returns list of all http routes in HTTP service definition format
 
 #### Sample output
 
@@ -44,14 +40,18 @@ Following is the sample output for httproutes-sd endpoint in Prometheus service 
 ]
 ```
 
+## App design and workflow details
+
+Prometheus shim application to retrieve list of all Ingress, httproutes and present it in HTTP service Definition format for Prometheus to monitor.
+
+Updates to the application will trigger following
+
+- Get current tag from git repo
+- Increment version tag and create package
+- Push new version image to Dockerhub registry
+- Update Helm chart to reflect version changes
+- Package and upload chart to Dockerhub.
+
 ## Requirements
 
 App uses prometheus service account role permission to list Ingresses and Http routes. During deployment, you must ensure that the ServiceAccount used by Pod can list all Ingresses across all namespaces.
-
-## Installation
-
-Helm package is created and uploaded with correct version always
-
-```bash
-helm install httproute-prometheus-shim   --version 1.0.1
-```
