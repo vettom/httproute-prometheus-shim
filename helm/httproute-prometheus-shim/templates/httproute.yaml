@@ -1,0 +1,32 @@
+{{- if .Values.httpRoute.enabled }}
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  annotations:
+  name: {{ include "httproute-prometheus-shim.fullname" . }}
+spec:
+{{- if .Values.httpRoute.hostnames }}
+  hostnames:
+    {{- toYaml .Values.httpRoute.hostnames | nindent 4 }}
+  {{- end }}
+  parentRefs:
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      name: {{ .Values.httpRoute.gatewayName }}
+      namespace: {{ .Values.httpRoute.gatewayNamespace }}
+    {{- if .Values.httpRoute.sectionName }}
+      sectionName: {{ .Values.httpRoute.sectionName }}
+    {{- end }}
+  rules:
+    - backendRefs:
+      - group: ''
+        kind: Service
+        name: {{ .Chart.Name }}
+        port: {{ .Values.service.port }}
+        weight: 1
+      matches:
+        - path:
+            type: PathPrefix
+            value: /
+{{- end }}

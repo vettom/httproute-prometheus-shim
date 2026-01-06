@@ -8,21 +8,16 @@ image:
   repository: dennysv/httproute-prometheus-shim
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "v0.0.0"
+  tag: "v1.0.3"
 
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
 
 serviceAccount:
-  # Specifies whether a service account should be created
   create: true
-  # Automatically mount a ServiceAccount's API credentials?
   automount: true
-  # Annotations to add to the service account
   annotations: {}
-  # The name of the service account to use.
-  # If not set and create is true, a name is generated using the fullname template
   name: ""
 
 podAnnotations: {}
@@ -44,6 +39,13 @@ securityContext:
 service:
   type: ClusterIP
   port: 9113
+
+httpRoute:
+  enabled: false
+  gatewayName: "default"
+  gatewayNamespace: "gateway-system"
+  hostnames: [promsd.example.com]
+  sectionName: ""
 
 ingress:
   enabled: false
